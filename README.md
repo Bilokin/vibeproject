@@ -49,7 +49,8 @@ A lightweight web application for microbiologists to upload microscope images, a
    ```bash
    python -m venv .venv
    source .venv/bin/activate
-   pip install -r requirements.txt
+   pip install --upgrade pip
+   pip install -e .[dev]
    ```
 3. **Set up environment variables** – Create a `.env` file (see `.env.example`).
 4. **Run database migrations**
