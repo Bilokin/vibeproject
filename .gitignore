@@ -96,3 +96,6 @@ pyrightconfig.json
 # Windows
 Thumbs.db
 Desktop.ini
+
+# Build artifacts
+*.egg-info/
