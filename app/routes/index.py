@@ -5,21 +5,22 @@ Provides the gallery view that lists all uploaded images with their organism tag
 """
 from fastapi import APIRouter, Depends
 from fastapi.responses import HTMLResponse
-from fastapi.templating import Jinja2Templates
 from starlette.requests import Request
 
-# Assume we have a repository to fetch images
+# Repository and session
 from ..repository import ImageRepository
-from ..models_sqlalchemy import SessionLocal  # SQLAlchemy session factory
+from ..models_sqlalchemy import SessionLocal
+
+# View implementation
+from ..views.index_page import IndexPage
 
 router = APIRouter()
-templates = Jinja2Templates(directory="app/templates")
+index_view = IndexPage()
 
 @router.get("/", response_class=HTMLResponse)
-async def index(request: Request, db_session: SessionLocal = Depends(SessionLocal)):
+async def index(request: Request, db_session: SessionLocal = Depends(lambda: SessionLocal())):
     repo = ImageRepository(db_session)
     images = repo.list_all()
-    # Convert to simple dicts for template context
     image_list = [
         {
             "id": img.id,
@@ -28,4 +29,4 @@ async def index(request: Request, db_session: SessionLocal = Depends(SessionLoca
         }
         for img in images
     ]
-    return templates.TemplateResponse("index.html", {"request": request, "images": image_list})
+    return index_view.render(image_list)

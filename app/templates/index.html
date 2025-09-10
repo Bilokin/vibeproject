@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>VibeProject Gallery</title>
+    <style>
+        body {font-family: Arial, sans-serif; margin: 0; padding: 20px;}
+        .gallery {display: flex; flex-wrap: wrap; gap: 10px;}
+        .item {border: 1px solid #ccc; padding: 5px; width: 200px;}
+        img {max-width: 100%; height: auto; display:block; margin-bottom:5px;}
+    </style>
+</head>
+<body>
+<h1>Microbiology Image Gallery</h1>
+<div class="gallery">
+{% for image in images %}
+    <div class="item">
+        <img src="{{ image.url }}" alt="Image {{ image.id }}">
+        <p>{{ image.tag }}</p>
+    </div>
+{% endfor %}
+</div>
+</body>
+</html>

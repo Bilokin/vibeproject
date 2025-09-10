@@ -31,6 +31,13 @@ if users_router:
     app.include_router(users_router, prefix="/users")
 if images_router:
     app.include_router(images_router, prefix="/images")
+# Index router (gallery)
+try:
+    from .routes.index import router as index_router  # type: ignore
+except Exception:
+    index_router = None
+if index_router:
+    app.include_router(index_router)
 
 @app.on_event("startup")
 async def startup():
