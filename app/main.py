@@ -22,9 +22,11 @@ except Exception:
 app = FastAPI(title="VibeProject")
 
 # Mount static files (images, css, js)
-static_dir = os.path.join(os.path.dirname(__file__), "static")
-if os.path.isdir(static_dir):
-    app.mount("/static", StaticFiles(directory=static_dir), name="static")
+# Mount the project's static folder (contains uploads) as /static
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+static_dir = os.path.join(project_root, "static")
+os.makedirs(static_dir, exist_ok=True)
+app.mount("/static", StaticFiles(directory=static_dir), name="static")
 
 # Include routers if available
 if users_router:
