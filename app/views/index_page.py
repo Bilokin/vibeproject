@@ -28,7 +28,7 @@ class IndexPage(BaseIndexPage):
             autoescape=select_autoescape(["html", "xml"]),
         )
 
-    def render(self, images: List[Dict]) -> HTMLResponse:
+    def render(self, images: List[Dict], user_email: str | None = None) -> HTMLResponse:
         template = self.env.get_template("index.html")
-        content = template.render(images=images)
+        content = template.render(images=images, user_email=user_email)
         return HTMLResponse(content=content)

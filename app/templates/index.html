@@ -1,20 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Gallery - VibeProject</title>
-    <link rel="stylesheet" href="/static/css/style.css">
-</head>
+<head><meta charset="UTF-8"><title>Gallery - VibeProject</title></head>
 <body>
-    <h1>Image Gallery</h1>
-    <a href="/login">Login</a>
-    <div class="gallery">
-        {% for img in images %}
-            <div class="image-item">
-                <img src="{{ img.url }}" alt="Image {{ img.id }}" width="200"><br>
-                <span>{{ img.tag }}</span>
-            </div>
-        {% endfor %}
-    </div>
-</body>
-</html>
+<h1>Image Gallery</h1>
+{% if user_email %}
+<p>Welcome, {{ user_email }}! <a href="/logout">Logout</a></p>
+{% else %}
+<a href="/login">Login</a>
+{% endif %}
+<div class="gallery">
+    {% for img in images %}
+        <div class="image-item"><img src="{{ img.url }}" alt="Image {{ img.id }}" width="200"><br><span>{{ img.tag }}</span></div>
+    {% endfor %}
+</div>
+</body></html>

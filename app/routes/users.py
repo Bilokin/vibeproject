@@ -15,15 +15,16 @@ def get_login(request: Request):
     return HTMLResponse(content=template.render())
 
 @router.post("/login")
-def post_login(email: str = Form(...), password: str = Form(...)):
+def post_login(request: Request, email: str = Form(...), password: str = Form(...)):
     user = User.get_by_email(email)
     if not user or not user.verify_password(password):
         return RedirectResponse(url="/login?error=1", status_code=303)
-    return RedirectResponse(url="/", status_code=303)
+    response = RedirectResponse(url="/", status_code=303)
+    response.set_cookie(key="user_email", value=user.email, httponly=True)
+    return response
 
 @router.post("/register")
 def post_register(email: str = Form(...), password: str = Form(...)):
-    # Simple duplicate check
     if User.get_by_email(email):
         return RedirectResponse(url="/login?error=2", status_code=303)
     user = User(email=email)
@@ -35,5 +36,10 @@ def post_register(email: str = Form(...), password: str = Form(...)):
         db.commit()
     finally:
         db.close()
-    # Mock email verification step
     return RedirectResponse(url="/login?registered=1", status_code=303)
+
+@router.get("/logout")
+def logout():
+    response = RedirectResponse(url="/", status_code=303)
+    response.delete_cookie(key="user_email")
+    return response
