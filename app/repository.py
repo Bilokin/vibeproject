@@ -8,7 +8,8 @@ from __future__ import annotations
 
 from typing import List, Optional
 from sqlalchemy.orm import Session
-from .models_sqlalchemy import Image as ImageModel  # type: ignore
+import app.models_sqlalchemy as ms  # type: ignore
+ImageModel = ms.Image
 
 class ImageRepository:
     """Data access object for ``Image`` entities."""
