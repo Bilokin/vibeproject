@@ -29,4 +29,5 @@ async def index(request: Request, db_session: SessionLocal = Depends(lambda: Ses
         }
         for img in images
     ]
-    return index_view.render(image_list)
+    user_email = request.cookies.get("user_email")
+    return index_view.render(image_list, user_email=user_email)

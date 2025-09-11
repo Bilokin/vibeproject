@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><title>Login - VibeProject</title></head>
+<body>
+<h1>Login</h1>
+<form action="/login" method="post">
+<label>Email: <input type="email" name="email" required></label><br>
+<label>Password: <input type="password" name="password" required></label><br>
+<button type="submit">Login</button>
+</form>
+<p>New user? <a href="#register" onclick="document.getElementById('reg').style.display='block';return false;">Register here</a></p>
+<div id="reg" style="display:none;">
+<h2>Register</h2>
+<form action="/register" method="post">
+<label>Email: <input type="email" name="email" required></label><br>
+<label>Password: <input type="password" name="password" required></label><br>
+<button type="submit">Register</button>
+</form>
+<p>Verification email sent (mock).</p>
+</div>
+</body></html>

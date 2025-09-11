@@ -1,24 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>VibeProject Gallery</title>
-    <style>
-        body {font-family: Arial, sans-serif; margin: 0; padding: 20px;}
-        .gallery {display: flex; flex-wrap: wrap; gap: 10px;}
-        .item {border: 1px solid #ccc; padding: 5px; width: 200px;}
-        img {max-width: 100%; height: auto; display:block; margin-bottom:5px;}
-    </style>
-</head>
+<head><meta charset="UTF-8"><title>Gallery - VibeProject</title></head>
 <body>
-<h1>Microbiology Image Gallery</h1>
+<h1>Image Gallery</h1>
+{% if user_email %}
+<p>Welcome, {{ user_email }}! <a href="/upload">Upload Image</a> | <a href="/logout">Logout</a></p>
+{% else %}
+<a href="/login">Login</a>
+{% endif %}
 <div class="gallery">
-{% for image in images %}
-    <div class="item">
-        <img src="{{ image.url }}" alt="Image {{ image.id }}">
-        <p>{{ image.tag }}</p>
-    </div>
-{% endfor %}
+    {% for img in images %}
+        <div class="image-item"><img src="{{ img.url }}" alt="Image {{ img.id }}" width="200"><br><span>{{ img.tag }}</span></div>
+    {% endfor %}
 </div>
-</body>
-</html>
+</body></html>

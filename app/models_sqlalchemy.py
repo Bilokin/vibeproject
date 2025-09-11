@@ -19,6 +19,39 @@ class User(Base):
     hashed_password = Column(String(255), nullable=False)
     images = relationship("Image", back_populates="user")
 
+    def set_password(self, password: str):
+        import bcrypt
+        self.hashed_password = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
+
+    def verify_password(self, password: str) -> bool:
+        import bcrypt
+        return bcrypt.checkpw(password.encode(), self.hashed_password.encode())
+
+    @classmethod
+    def get_by_email(cls, email: str):
+        session = SessionLocal()
+        try:
+            return session.query(cls).filter_by(email=email).first()
+        finally:
+            session.close()
+
+    # Simple password handling
+    def set_password(self, raw: str):
+        import hashlib
+        self.hashed_password = hashlib.sha256(raw.encode()).hexdigest()
+
+    def verify_password(self, raw: str) -> bool:
+        import hashlib
+        return self.hashed_password == hashlib.sha256(raw.encode()).hexdigest()
+
+    @classmethod
+    def get_by_email(cls, email: str):
+        session = SessionLocal()
+        try:
+            return session.query(cls).filter_by(email=email).first()
+        finally:
+            session.close()
+
 class Image(Base):
     __tablename__ = "images"
     id = Column(Integer, primary_key=True)
