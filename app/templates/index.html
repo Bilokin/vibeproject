@@ -4,7 +4,7 @@
 <body>
 <h1>Image Gallery</h1>
 {% if user_email %}
-<p>Welcome, {{ user_email }}! <a href="/logout">Logout</a></p>
+<p>Welcome, {{ user_email }}! <a href="/upload">Upload Image</a> | <a href="/logout">Logout</a></p>
 {% else %}
 <a href="/login">Login</a>
 {% endif %}

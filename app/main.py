@@ -29,13 +29,13 @@ if os.path.isdir(static_dir):
 # Include routers if available
 if users_router:
     app.include_router(users_router)
-# Include login router
+# Include upload router
 try:
-    from .routes.login_route import router as login_router  # type: ignore
+    from .routes.upload import router as upload_router  # type: ignore
 except Exception:
-    login_router = None
-if login_router:
-    app.include_router(login_router)
+    upload_router = None
+if upload_router:
+    app.include_router(upload_router)
 if images_router:
     app.include_router(images_router, prefix="/images")
 # Index router (gallery)
